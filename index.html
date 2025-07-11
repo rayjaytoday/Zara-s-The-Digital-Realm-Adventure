@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Code Quest: The Digital Realm Adventure</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Georgia', serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #333;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .game-container {
+            max-width: 800px;
+            width: 90%;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            padding: 30px;
+            backdrop-filter: blur(10px);
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+            background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .story-section {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 15px;
+            margin-bottom: 20px;
+            border-left: 5px solid #4ecdc4;
+        }
+
+        .challenge-section {
+            background: #fff3cd;
+            padding: 20px;
+            border-radius: 15px;
+            margin-bottom: 20px;
+            border-left: 5px solid #ffc107;
+        }
+
+        .code-editor {
+            background: #1e1e1e;
+            color: #d4d4d4;
+            padding: 15px;
+            border-radius: 10px;
+            font-family: 'Courier New', monospace;
+            margin: 15px 0;
+            min-height: 120px;
+            border: 2px solid #333;
+        }
+
+        .code-editor:focus {
+            outline: none;
+            border-color: #4ecdc4;
+            box-shadow: 0 0 10px rgba(78, 205, 196, 0.3);
+        }
+
+        .btn {
+            background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            margin: 10px 5px;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        .btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .feedback {
+            padding: 15px;
+            border-radius: 10px;
+            margin: 15px 0;
+            font-weight: bold;
+        }
+
+        .success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+
+        .error {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+
+        .progress-bar {
+            background: #e9ecef;
+            height: 20px;
+            border-radius: 10px;
+            overflow: hidden;
+            margin: 20px 0;
+        }
+
+        .progress-fill {
+            background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
+            height: 100%;
+            transition: width 0.5s ease;
+        }
+
+        .hint {
+            background: #e7f3ff;
+            padding: 15px;
+            border-radius: 10px;
+            margin: 15px 0;
+            border-left: 4px solid #0066cc;
+        }
+
+        .character {
+            font-size: 60px;
+            text-align: center;
+            margin: 20px 0;
+            animation: bounce 2s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+            40% { transform: translateY(-10px); }
+            60% { transform: translateY(-5px); }
+        }
+
+        .level-indicator {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding: 15px;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+            border-radius: 15px;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .concept-box {
+            background: #f0f8ff;
+            padding: 15px;
+            border-radius: 10px;
+            margin: 15px 0;
+            border-left: 4px solid #4169e1;
+        }
+    </style>
+</head>
+<body>
+    <div class="game-container">
+        <div class="header">
+            <h1>🎮 Code Quest: The Digital Realm Adventure</h1>
+            <p>Learn to code by helping our hero save the digital world!</p>
+        </div>
+
+        <div class="level-indicator">
+            <span id="levelText">Level 1: The Variable Village</span>
+            <span id="scoreText">Score: 0</span>
+        </div>
+
+        <div class="progress-bar">
+            <div class="progress-fill" id="progressBar" style="width: 0%"></div>
+        </div>
+
+        <div id="gameContent">
+            <!-- Level 1: Variables -->
+            <div class="level" id="level1">
+                <div class="character">🧙‍♂️</div>
+                <div class="story-section">
+                    <h3>Chapter 1: The Variable Village</h3>
+                    <p>Welcome, brave coder! You are Zara, a young programmer who has stumbled into the Digital Realm. The wise wizard Algorithmius greets you at the entrance to Variable Village.</p>
+                    <p><strong>Algorithmius:</strong> "Greetings, Zara! Our village is in chaos! The magical containers that store our values have lost their labels. We call these containers 'variables' - they hold important information like names, ages, and treasures!"</p>
+                </div>
+
+                <div class="concept-box">
+                    <h4>💡 Coding Concept: Variables</h4>
+                    <p>Variables are like labeled boxes that store information. In most programming languages, you create them like this:</p>
+                    <code>let name = "Zara"</code><br>
+                    <code>let age = 16</code><br>
+                    <code>let treasure = "Golden Key"</code>
+                </div>
+
+                <div class="challenge-section">
+                    <h4>🎯 Your Mission:</h4>
+                    <p>Help restore the village by creating three variables. The villagers need you to store:</p>
+                    <ul>
+                        <li>A hero's name (your name!)</li>
+                        <li>The number of magic crystals found (42)</li>
+                        <li>The name of a magical weapon ("Sword of Debugging")</li>
+                    </ul>
+                </div>
+
+                <textarea class="code-editor" id="codeInput1" placeholder="// Write your code here
+// Example: let variableName = value;
+// Remember to use quotes for text and no quotes for numbers!"></textarea>
+
+                <div class="hint" id="hint1">
+                    <strong>💡 Hint:</strong> Use 'let' to create variables. Text needs quotes, numbers don't!
+                </div>
+
+                <button class="btn" onclick="checkLevel1()">Cast Spell (Run Code)</button>
+                <button class="btn" onclick="showHint(1)">Ask Algorithmius for Help</button>
+            </div>
+
+            <!-- Level 2: Functions -->
+            <div class="level hidden" id="level2">
+                <div class="character">🏰</div>
+                <div class="story-section">
+                    <h3>Chapter 2: The Function Fortress</h3>
+                    <p>Excellent work! The villagers cheer as their containers are properly labeled. But suddenly, a messenger arrives with urgent news!</p>
+                    <p><strong>Messenger:</strong> "The Function Fortress is under attack! The bridge is broken, and we need someone who can create magical spells - er, functions - to help people cross safely!"</p>
+                    <p><strong>Algorithmius:</strong> "Functions are like magical recipes, Zara. They take ingredients (inputs) and create something useful (outputs). You can use them over and over!"</p>
+                </div>
+
+                <div class="concept-box">
+                    <h4>💡 Coding Concept: Functions</h4>
+                    <p>Functions are reusable blocks of code that perform specific tasks:</p>
+                    <code>function greet(name) {<br>
+                    &nbsp;&nbsp;return "Hello, " + name + "!";<br>
+                    }</code>
+                </div>
+
+                <div class="challenge-section">
+                    <h4>🎯 Your Mission:</h4>
+                    <p>Create a function called 'buildBridge' that takes a person's name and returns a message welcoming them across the bridge.</p>
+                    <p>The message should say: "Welcome across the bridge, [name]! You are now safe."</p>
+                </div>
+
+                <textarea class="code-editor" id="codeInput2" placeholder="// Create a function called buildBridge
+// It should take one parameter: name
+// Return a welcome message"></textarea>
+
+                <div class="hint hidden" id="hint2">
+                    <strong>💡 Hint:</strong> function buildBridge(name) { return "Welcome across the bridge, " + name + "! You are now safe."; }
+                </div>
+
+                <button class="btn" onclick="checkLevel2()">Build the Bridge</button>
+                <button class="btn" onclick="showHint(2)">Ask for Engineering Help</button>
+            </div>
+
+            <!-- Level 3: Loops -->
+            <div class="level hidden" id="level3">
+                <div class="character">🔄</div>
+                <div class="story-section">
+                    <h3>Chapter 3: The Loop Labyrinth</h3>
+                    <p>The bridge is rebuilt! But now you face the mysterious Loop Labyrinth. The guardian explains the challenge:</p>
+                    <p><strong>Guardian:</strong> "To pass through, you must demonstrate the power of repetition. There are 5 magic doors, each requiring the same unlocking spell. Surely you won't write the same code 5 times?"</p>
+                    <p><strong>Algorithmius:</strong> "This is where loops shine, Zara! They let you repeat actions without writing the same code over and over."</p>
+                </div>
+
+                <div class="concept-box">
+                    <h4>💡 Coding Concept: Loops</h4>
+                    <p>Loops let you repeat code multiple times:</p>
+                    <code>for (let i = 1; i <= 5; i++) {<br>
+                    &nbsp;&nbsp;console.log("Unlocking door " + i);<br>
+                    }</code>
+                </div>
+
+                <div class="challenge-section">
+                    <h4>🎯 Your Mission:</h4>
+                    <p>Create a for loop that unlocks 5 doors. For each door, print: "Unlocking door [number]"</p>
+                    <p>Use console.log() to print each message.</p>
+                </div>
+
+                <textarea class="code-editor" id="codeInput3" placeholder="// Create a for loop that runs 5 times
+// Print 'Unlocking door 1', 'Unlocking door 2', etc."></textarea>
+
+                <div class="hint hidden" id="hint3">
+                    <strong>💡 Hint:</strong> for (let i = 1; i <= 5; i++) { console.log("Unlocking door " + i); }
+                </div>
+
+                <button class="btn" onclick="checkLevel3()">Unlock the Doors</button>
+                <button class="btn" onclick="showHint(3)">Ask the Guardian</button>
+            </div>
+
+            <!-- Victory Screen -->
+            <div class="level hidden" id="victory">
+                <div class="character">🎉</div>
+                <div class="story-section">
+                    <h3>🏆 Victory! The Digital Realm is Saved!</h3>
+                    <p>Congratulations, brave coder! You've successfully mastered the fundamental concepts of programming and saved the Digital Realm!</p>
+                    <p><strong>Algorithmius:</strong> "You've learned the three pillars of programming: Variables to store information, Functions to organize your code, and Loops to repeat actions efficiently. These skills will serve you well in your coding journey!"</p>
+                    <p><strong>Your achievements:</strong></p>
+                    <ul>
+                        <li>✅ Mastered Variables - You can store and manage data</li>
+                        <li>✅ Conquered Functions - You can create reusable code blocks</li>
+                        <li>✅ Navigated Loops - You can repeat actions efficiently</li>
+                    </ul>
+                    <p>The Digital Realm is now peaceful, and you're ready for your next coding adventure!</p>
+                </div>
+                <button class="btn" onclick="restartGame()">Play Again</button>
+            </div>
+        </div>
+
+        <div id="feedback" class="feedback hidden"></div>
+    </div>
+
+    <script>
+        let currentLevel = 1;
+        let score = 0;
+        let hintsUsed = 0;
+
+        function updateProgress() {
+            const progressBar = document.getElementById('progressBar');
+            const levelText = document.getElementById('levelText');
+            const scoreText = document.getElementById('scoreText');
+            
+            const progress = ((currentLevel - 1) / 3) * 100;
+            progressBar.style.width = progress + '%';
+            
+            const levelNames = {
+                1: 'Level 1: The Variable Village',
+                2: 'Level 2: The Function Fortress',
+                3: 'Level 3: The Loop Labyrinth',
+                4: 'Victory!'
+            };
+            
+            levelText.textContent = levelNames[currentLevel] || 'Complete!';
+            scoreText.textContent = `Score: ${score}`;
+        }
+
+        function showFeedback(message, type) {
+            const feedback = document.getElementById('feedback');
+            feedback.textContent = message;
+            feedback.className = `feedback ${type}`;
+            feedback.classList.remove('hidden');
+            
+            setTimeout(() => {
+                feedback.classList.add('hidden');
+            }, 3000);
+        }
+
+        function showHint(level) {
+            const hint = document.getElementById('hint' + level);
+            hint.classList.remove('hidden');
+            hintsUsed++;
+        }
+
+        function checkLevel1() {
+            const code = document.getElementById('codeInput1').value.toLowerCase();
+            
+            // Check for basic variable syntax
+            if (code.includes('let') && code.includes('=') && code.includes('"')) {
+                const lines = code.split('\n').filter(line => line.trim() && !line.trim().startsWith('//'));
+                if (lines.length >= 3) {
+                    showFeedback('🎉 Excellent! You\'ve mastered variables! The village is restored!', 'success');
+                    score += 100;
+                    setTimeout(() => {
+                        nextLevel();
+                    }, 2000);
+                } else {
+                    showFeedback('Almost there! Make sure you create all three variables.', 'error');
+                }
+            } else {
+                showFeedback('Remember to use "let" to create variables and quotes for text!', 'error');
+            }
+        }
+
+        function checkLevel2() {
+            const code = document.getElementById('codeInput2').value.toLowerCase();
+            
+            if (code.includes('function') && code.includes('buildbridge') && code.includes('return')) {
+                if (code.includes('name') && code.includes('welcome')) {
+                    showFeedback('🌉 Amazing! The bridge is built and people are crossing safely!', 'success');
+                    score += 150;
+                    setTimeout(() => {
+                        nextLevel();
+                    }, 2000);
+                } else {
+                    showFeedback('Good start! Make sure your function uses the name parameter and returns a welcome message.', 'error');
+                }
+            } else {
+                showFeedback('Remember to create a function that returns a message!', 'error');
+            }
+        }
+
+        function checkLevel3() {
+            const code = document.getElementById('codeInput3').value.toLowerCase();
+            
+            if (code.includes('for') && code.includes('let i') && code.includes('console.log')) {
+                if (code.includes('unlocking door') && (code.includes('i++') || code.includes('i += 1'))) {
+                    showFeedback('🔓 Incredible! All doors are unlocked! The labyrinth is conquered!', 'success');
+                    score += 200;
+                    setTimeout(() => {
+                        nextLevel();
+                    }, 2000);
+                } else {
+                    showFeedback('Great effort! Make sure you\'re printing "Unlocking door" with the number and incrementing i.', 'error');
+                }
+            } else {
+                showFeedback('Remember to use a for loop with console.log!', 'error');
+            }
+        }
+
+        function nextLevel() {
+            document.getElementById('level' + currentLevel).classList.add('hidden');
+            currentLevel++;
+            
+            if (currentLevel <= 3) {
+                document.getElementById('level' + currentLevel).classList.remove('hidden');
+            } else {
+                document.getElementById('victory').classList.remove('hidden');
+                score += (100 - (hintsUsed * 10)); // Bonus points for less hint usage
+            }
+            
+            updateProgress();
+        }
+
+        function restartGame() {
+            currentLevel = 1;
+            score = 0;
+            hintsUsed = 0;
+            
+            // Hide all levels
+            for (let i = 1; i <= 3; i++) {
+                document.getElementById('level' + i).classList.add('hidden');
+                document.getElementById('codeInput' + i).value = '';
+                document.getElementById('hint' + i).classList.add('hidden');
+            }
+            
+            document.getElementById('victory').classList.add('hidden');
+            document.getElementById('level1').classList.remove('hidden');
+            updateProgress();
+        }
+
+        // Initialize the game
+        updateProgress();
+    </script>
+</body>
+</html>
